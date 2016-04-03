@@ -26,6 +26,7 @@ var Global =
 	nodedamage: 5,
 	nodedamagerate: 500,
 	leechdistance: 100,
+	nodeWanderSpeed: 1,
 
 	starthealth: 1000,
 

@@ -27,15 +27,30 @@ function Node(game, sprite, x, y)
 	this.candamageivl = null;
 
 	this.lerpid = guid();
+
+	this.wanderx = chance.integer({min: 0, max: Global.width - Global.noderad * 2});
+	this.wandery = chance.integer({min: 0, max: Global.height - Global.noderad * 2});
 }
 
 Node.prototype.update = function(dt)
 {
 	var self = this;
 
-
 	var vn = new Victor(this.x, this.y);
 	var vp = new Victor(this.game.player.x, this.game.player.y);
+
+
+	var angletowander = Math.atan2(this.wandery - vn.y, this.wanderx - vn.x);
+
+	this.x += Math.cos(angletowander) * Global.nodeWanderSpeed;
+	this.y += Math.sin(angletowander) * Global.nodeWanderSpeed;
+
+	if(vn.distance(new Victor(this.wanderx, this.wandery)) < 10)
+	{
+		this.wanderx = chance.integer({min: 0, max: Global.width - Global.noderad * 2});
+		this.wandery = chance.integer({min: 0, max: Global.height - Global.noderad * 2});
+	}
+
 
 	if(vn.distance(vp) < Global.leechdistance)
 	{
