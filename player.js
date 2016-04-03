@@ -15,7 +15,7 @@ function Player(game)
 	this.playergraphics = new PIXI.Graphics();
 	this.playergraphics.clear();
     //this.playergraphics.lineStyle(3, 0xFF0000, 1);
-    this.playergraphics.beginFill(0xFF0000, 1);
+    this.playergraphics.beginFill(0x27ae60, 1);
     this.playergraphics.drawCircle(999999, 999999, Global.playerrad);
     this.playergraphics.endFill();   
 
@@ -49,6 +49,18 @@ Player.prototype.update = function(dt)
 	{
 		this.x = Global.mouse.x;
 		this.y = Global.mouse.y;
+
+		if(this.x >= Global.width - 2)
+			this.x = Global.width - 2;
+
+		if(this.x <= 0)
+			this.x = 0;
+
+		if(this.y >= Global.height - 2)
+			this.y = Global.height - 2;
+
+		if(this.y <= 0)
+			this.y = 0;
 	}
 
 	if(this.x !== null && this.y !== null)
@@ -67,9 +79,9 @@ Player.prototype.draw = function()
 	if(this.istakingdamage)
 	{
 		this.damagegraphics.clear();
-	    this.damagegraphics.lineStyle(2, 0xFF00FF, 1);
-	    this.damagegraphics.beginFill(0xFF00FF, 0);
-	    this.damagegraphics.drawCircle(this.x + Global.playerrad, this.y + Global.playerrad, Global.playerrad * 3);
+	    this.damagegraphics.lineStyle(2, 0x9b59b6, 1);
+	    this.damagegraphics.beginFill(0x9b59b6, 0);
+	    this.damagegraphics.drawCircle(this.x + Global.playerrad, this.y + Global.playerrad, Global.playerrad * 5);
 	    this.damagegraphics.endFill();  
 
 		this.game.renderer.render(this.damagegraphics);

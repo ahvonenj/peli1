@@ -27,18 +27,38 @@ function Node(game, sprite, x, y)
 	this.candamageivl = null;
 
 	this.lerpid = guid();
+
+	this.wanderx = chance.integer({min: 0, max: Global.width - Global.noderad * 2});
+	this.wandery = chance.integer({min: 0, max: Global.height - Global.noderad * 2});
+
+	this.damagegraphics = new PIXI.Graphics();
+	this.game.stage.addChild(this.damagegraphics);
 }
 
 Node.prototype.update = function(dt)
 {
 	var self = this;
 
-
 	var vn = new Victor(this.x, this.y);
 	var vp = new Victor(this.game.player.x, this.game.player.y);
 
+
+	var angletowander = Math.atan2(this.wandery - vn.y, this.wanderx - vn.x);
+
+	this.x += Math.cos(angletowander) * Global.nodeWanderSpeed;
+	this.y += Math.sin(angletowander) * Global.nodeWanderSpeed;
+
+	if(vn.distance(new Victor(this.wanderx, this.wandery)) < 10)
+	{
+		this.wanderx = chance.integer({min: 0, max: Global.width - Global.noderad * 2});
+		this.wandery = chance.integer({min: 0, max: Global.height - Global.noderad * 2});
+	}
+
+
 	if(vn.distance(vp) < Global.leechdistance)
 	{
+		this.damagegraphics.alpha = 1;
+
 		this.playerwasinrange = true;
 		this.leechline.show();
 		this.isleeching = true;
@@ -59,6 +79,8 @@ Node.prototype.update = function(dt)
 	}
 	else
 	{
+		this.damagegraphics.alpha -= Global.nodeDamageAlphaDecay * dt;
+
 		if(this.leechline !== null && this.playerwasinrange)
 		{
 			this.playerwasinrange = false;
@@ -92,5 +114,13 @@ Node.prototype.draw = function()
 	if(this.leechline !== null)
 	{
 		this.leechline.draw();
+
+		this.damagegraphics.clear();
+	    this.damagegraphics.lineStyle(2, 0xe74c3c, 1);
+	    this.damagegraphics.beginFill(0xe74c3c, 0);
+	    this.damagegraphics.drawCircle(this.x + Global.noderad * 2 - 1, this.y + Global.noderad * 2 - 1, Global.noderad * 3);
+	    this.damagegraphics.endFill();  
 	}
+	
+	this.game.renderer.render(this.damagegraphics);
 }
