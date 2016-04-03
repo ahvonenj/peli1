@@ -10,8 +10,8 @@ function Aoe(game, x, y)
 	this.bursted = false;
 	this.readytoburst = false;
 
-	this.shakemod = 1;
-	this.shakeamount = 4;
+	this.shakemod = -1;
+	this.shakeamount = 8;
 
 	this.burstivl = null;
 
@@ -38,8 +38,7 @@ Aoe.prototype.update = function(dt)
 
 		this.color = 0xd35400;
 
-		this.x += this.shakeamount * this.shakemod;
-		this.y += this.shakeamount * this.shakemod;
+		this.rad += this.shakeamount * this.shakemod;
 
 		this.shakemod *= -1;
 
