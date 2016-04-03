@@ -14,6 +14,8 @@ html, body
 body
 {
 	background-color: #34495e;
+	background-image: url('res/tutorial.png');
+	background-repeat: repeat;
 }
 
 #wrapper
@@ -24,8 +26,6 @@ body
 	position: absolute;
 	left: calc(50% - 300px);
 	top: 100px;
-
-	background-color: #ecf0f1;
 }
 
 #score
