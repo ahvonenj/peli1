@@ -1,3 +1,16 @@
+function guid() 
+{
+	function s4() 
+	{
+		return Math.floor((1 + Math.random()) * 0x10000)
+		.toString(16)
+		.substring(1);
+	}
+
+	return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+		s4() + '-' + s4() + s4() + s4();
+}
+
 function Node(game, sprite, x, y)
 {
 	this.game = game;
@@ -7,13 +20,15 @@ function Node(game, sprite, x, y)
 
 	this.exists = false;
 	this.isleeching = false;
-	this.leechline = null;
+	this.leechline = new Leechline(this.game, this);
+	this.playerwasinrange = false;
+
+	this.lerpid = guid();
 }
 
 Node.prototype.update = function(dt)
 {
-	//this.x += 10 * dt;
-	//this.y += 10 * dt;
+	var self = this;
 
 
 	var vn = new Victor(this.x, this.y);
@@ -21,19 +36,26 @@ Node.prototype.update = function(dt)
 
 	if(vn.distance(vp) < Global.leechdistance)
 	{
-		if(!this.isleeching)
-		{
-			this.leechline = new Leechline(this.game, this);
-			this.isleeching = true;
-		}
+		this.playerwasinrange = true;
+		this.leechline.show();
+		this.isleeching = true;
+
+		Lerppu.interrupt(this.lerpid);
 	}
 	else
 	{
-		if(this.leechline !== null)
+		if(this.leechline !== null && this.playerwasinrange)
 		{
+			this.playerwasinrange = false;
 			this.isleeching = false;
-			this.leechline.destroy();
-			this.leechline = null;
+
+			Lerppu.interpolate(this.leechline.graphics.alpha, 0, 0.25, function(l)
+			{
+				self.leechline.graphics.alpha = l;
+			}, Lerppu.easings.linear, this.lerpid, function()
+			{
+				self.leechline.hide();
+			});
 		}
 	}
 

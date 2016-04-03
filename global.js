@@ -24,6 +24,8 @@ var Global =
 
 
 	nodedamage: 1,
-	leechdistance: 100
+	leechdistance: 100,
+
+	starthealth: 100
 
 }

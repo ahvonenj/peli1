@@ -11,7 +11,7 @@ function Game()
 	this.renderer = PIXI.autoDetectRenderer(Global.width, Global.height, 
 	{ 
 		view: document.querySelector('canvas'),
-		backgroundColor: 0x000000,
+		backgroundColor: 0x2c3e50,
 		antialias: true 
 	});
 
@@ -98,7 +98,7 @@ Game.prototype.start = function()
 
 	this.gamemusicfastener = setInterval(function()
 	{
-		console.log('Music increase ' + self.gamemusic.playbackRate + ' => ' + (self.gamemusic.playbackRate + Global.gameMusicIncreaseAmount));
+		//console.log('Music increase ' + self.gamemusic.playbackRate + ' => ' + (self.gamemusic.playbackRate + Global.gameMusicIncreaseAmount));
 		self.gamemusic.playbackRate += Global.gameMusicIncreaseAmount;
 	}, Global.gameMusicSpeedIncreaseRate);
 
@@ -138,6 +138,8 @@ Game.prototype.update = function(dt)
 			this.nodes[i].update(dt);
 		}
 	}
+
+	Lerppu.update(this.t.time);
 }
 
 Game.prototype.render = function()

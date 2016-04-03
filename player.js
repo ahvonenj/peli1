@@ -2,12 +2,12 @@ function Player(game)
 {
 	this.game = game;
 
-	this.starthealth = 100;
+	this.starthealth = Global.starthealth;
 	this.health = this.starthealth;
 
 
 
-	
+
 	this.x = null;
 	this.y = null;
 
