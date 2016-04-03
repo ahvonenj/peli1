@@ -19,7 +19,7 @@ body
 #wrapper
 {
 	width: 600px;
-	height: 675px;
+	height: 635px;
 
 	position: absolute;
 	left: calc(50% - 300px);
@@ -31,7 +31,7 @@ body
 #score
 {
 	width: 100%;
-	height: 75px;
+	height: 35px;
 
 	border-bottom: 1px solid black;
 }

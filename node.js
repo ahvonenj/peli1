@@ -10,8 +10,8 @@ function Node(game, sprite, x, y)
 
 Node.prototype.update = function(dt)
 {
-	this.x += 10 * dt;
-	this.y += 10 * dt;
+	//this.x += 10 * dt;
+	//this.y += 10 * dt;
 
 
 
