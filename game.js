@@ -109,6 +109,12 @@ Game.prototype.start = function()
 	$('#game').css('cursor', 'none');
 	$('canvas').css('cursor', 'none');
 
+	Global.stageoffset = 
+	{
+		x: $(canvas).offset().left,
+		y: $(canvas).offset().top
+	}
+
 	/* TIMERS START */
 	this.nodespawner = setInterval(this.spawnNode.bind(self), Global.nodeSpawnStartRate);
 
