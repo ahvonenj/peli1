@@ -31,6 +31,7 @@ function Game()
 		time: 0
 	};
 
+	this.godmode = false;
 	this.isgameover = false;
 
 
@@ -39,8 +40,11 @@ function Game()
 	this.gamemusic.playbackRate = Global.gameMusicStartSpeed;
 	this.gamemusic.loop = true;
 
-	this.leechsound = new Audio("leech.wav");
-	this.nukesound = new Audio('nuke.mp3');
+	this.leechsound = new Audio("res/leech.wav");
+	this.nukesound = new Audio('res/nuke.mp3');
+	this.expwarning = new Audio('res/expwarning.wav');
+	this.explosionsound = new Audio('res/explosion.wav');
+	this.aoehit = new Audio('res/aoehit.wav');
 
 
 	/* PLAYER INIT */
@@ -61,6 +65,10 @@ function Game()
     this.tex = self.nodegraphics.generateTexture();
 
 
+    /* AOE INIT */
+    this.aoes = [];
+
+
     /* NODE LEECH LINE INIT */
    // this.leechlines = [];
 
@@ -69,6 +77,7 @@ function Game()
 	this.nodespawner = null;
 	this.gamemusicfastener = null;
 	this.scoreincreaser = null;
+	this.aoespawner = null;
 
 
 	/* EVENTS INIT**/
@@ -113,6 +122,8 @@ Game.prototype.start = function()
 	{
 		self.score += Global.scoreAwardAmount;
 	}, Global.scoreAwardRate);
+
+	this.aoespawner = setInterval(this.spawnAoe.bind(self), Global.aoeSpawnStartRate);
 
 
 	this.gamemusic.play();
@@ -160,6 +171,19 @@ Game.prototype.update = function(dt)
 		}
 	}
 
+	if(this.aoes.length > 0)
+	{
+		for(var i = 0; i < this.aoes.length; i++)
+		{
+			this.aoes[i].update(dt);
+
+			if(this.aoes[i].bursted)
+			{
+				this.aoes.splice(i, 1);
+			}
+		}
+	}
+
 	Lerppu.update(this.t.time);
 }
 
@@ -180,6 +204,11 @@ Game.prototype.render = function()
 		this.nodes[i].draw();
 	}
 
+	for(var i = 0; i < this.aoes.length; i++)
+	{
+		this.aoes[i].draw();
+	}
+
 	this.player.draw();
 
 	this.renderer.render(this.stage);
@@ -195,6 +224,19 @@ Game.prototype.spawnNode = function()
 	self.nodes.push(new Node(self, new PIXI.Sprite(self.tex), 
 		chance.integer({min: 0, max: Global.width - Global.noderad * 2}), 
 		chance.integer({min: 0, max: Global.height - Global.noderad * 2})
+	));
+}
+
+Game.prototype.spawnAoe = function()
+{
+	if(this.aoes.length > 500)
+		return;
+
+	var self = this;
+
+	self.aoes.push(new Aoe(self,
+		chance.integer({min: 0 - Global.aoemaxrad / 4, max: Global.width}), 
+		chance.integer({min: 0 - Global.aoemaxrad / 4, max: Global.height})
 	));
 }
 

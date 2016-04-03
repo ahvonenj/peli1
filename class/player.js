@@ -23,23 +23,36 @@ function Player(game)
 
     this.sprite = new PIXI.Sprite(this.playertex);
 
+    this.sprite.anchor = new PIXI.Point(0.5, 0.5);
+
     this.game.stage.addChild(this.sprite);
 
     this.damagegraphics = new PIXI.Graphics();
     this.game.stage.addChild(this.damagegraphics);
 }
 
-Player.prototype.damage = function()
+Player.prototype.damage = function(source)
 {
 	var self = this;
 
+	if(!this.game.godmode)
+	{
+		if(source instanceof Node)
+		{
+			this.health -= Global.nodedamage;
+			this.game.leechsound.play();
+		}
+		else if(source instanceof Aoe)
+		{
+			this.health -= Global.aoedamage;
+			this.game.aoehit.play();
+		}
+
+		if(this.health <= 0)
+			this.health = 0;
+	}
+
 	this.istakingdamage = true;
-	this.health -= Global.nodedamage;
-
-	if(this.health <= 0)
-		this.health = 0;
-
-	this.game.leechsound.play();
 	this.damagegraphics.alpha = 1;
 }
 
@@ -81,7 +94,7 @@ Player.prototype.draw = function()
 		this.damagegraphics.clear();
 	    this.damagegraphics.lineStyle(2, 0x9b59b6, 1);
 	    this.damagegraphics.beginFill(0x9b59b6, 0);
-	    this.damagegraphics.drawCircle(this.x + Global.playerrad, this.y + Global.playerrad, Global.playerrad * 5);
+	    this.damagegraphics.drawCircle(this.x - Global.playerrad /4, this.y - Global.playerrad/4, Global.playerrad * 5);
 	    this.damagegraphics.endFill();  
 
 		this.game.renderer.render(this.damagegraphics);
