@@ -69,6 +69,22 @@ body
 	border: 1px solid #ecf0f1;
 }
 
+#gameover
+{
+	top: 34px;
+	left: 0;
+	width: 100%;
+	height: calc(100% - 34px);
+	position: absolute;
+	line-height: 600px;
+	font-size: 24pt;
+	background-color: black;
+	color: white;
+	font-family: Arial;
+	text-align: center;
+	display: none;
+}
+
 #startgame
 {
 	width: 100px;
