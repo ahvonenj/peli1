@@ -31,17 +31,19 @@ function Game()
 	this.nodegraphics.clear();
     this.nodegraphics.lineStyle(3, 0xFFFFFF, 1);
     this.nodegraphics.beginFill(0xFFFFFF, 1);
-    this.nodegraphics.drawCircle(0, 0, Global.noderad);
+    this.nodegraphics.drawCircle(999999, 999999, Global.noderad);
     this.nodegraphics.endFill();   
+
+    this.tex = self.nodegraphics.generateTexture();
 
 	this.nodespawner = setInterval(function()
 	{
-		self.nodes.push(new Node(self, new PIXI.Sprite(self.nodegraphics.generateTexture()), 
-			chance.integer({min: Global.noderad, max: Global.width - Global.noderad}), 
-			chance.integer({min: Global.noderad, max: Global.height - Global.noderad})
+		self.nodes.push(new Node(self, new PIXI.Sprite(self.tex), 
+			chance.integer({min: 0, max: Global.width - Global.noderad * 2}), 
+			chance.integer({min: 0, max: Global.height - Global.noderad * 2})
 		));
 
-	}, 50);
+	}, 1);
 
 	requestAnimationFrame(function(t) { self.animate(self); });
 }
