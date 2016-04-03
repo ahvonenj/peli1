@@ -78,6 +78,16 @@ function Game()
 	this.gamemusicfastener = null;
 	this.scoreincreaser = null;
 	this.aoespawner = null;
+	this.regentimer = null;
+
+	this.timers = 
+	[
+		this.nodespawner,
+		this.gamemusicfastener,
+		this.scoreincreaser,
+		this.aoespawner,
+		this.regentimer
+	]
 
 
 	/* EVENTS INIT**/
@@ -128,6 +138,17 @@ Game.prototype.start = function()
 	{
 		self.score += Global.scoreAwardAmount;
 	}, Global.scoreAwardRate);
+
+	this.regentimer = setInterval(function()
+	{
+		if(self.player.health > 0 && self.player.health < Global.maxhealth)
+		{
+			self.player.health += Global.regenamount;
+
+			if(self.player.health > Global.maxhealth)
+				self.player.health = Global.maxhealth;
+		}
+	}, Global.regenrate);
 
 	this.aoespawner = setInterval(this.spawnAoe.bind(self), Global.aoeSpawnStartRate);
 
@@ -252,4 +273,9 @@ Game.prototype.gameOver = function()
 	this.isgameover = true;
 	this.nukesound.play();
 	this.gamemusic.pause();
+
+	for(var i = 0; i < this.timers.length; i++)
+	{
+		clearInterval(this.timers[i]);
+	}
 }

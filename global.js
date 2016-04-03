@@ -31,7 +31,10 @@ var Global =
 	leechdistance: 100,
 	nodeWanderSpeed: 1,
 
+	maxhealth: 1000,
 	starthealth: 1000,
+	regenamount: 4,
+	regenrate: 1500,
 
 	nodeDamageAlphaDecay: 3,
 	playerDamageAlphaDecay: 3,
