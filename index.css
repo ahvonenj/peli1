@@ -42,6 +42,36 @@ body
 	height: 600px;
 }
 
+#startgame
+{
+	width: 100px;
+	height: 40px;
+
+	position: absolute;
+	top: calc(50% - 20px);
+	left: calc(50% - 50px);
+
+	color: white;
+	background-color: #c0392b;
+
+	font-family: Arial;
+
+	line-height: 40px;
+	text-align: center;
+	font-size: 18pt;
+
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+#startgame:hover
+{
+	cursor: pointer;
+
+	transform: scale(1.05, 1.05);
+}
+
 canvas
 {
 	width: 100%;
