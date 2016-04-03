@@ -39,8 +39,9 @@ function Game()
 	this.gamemusic.playbackRate = Global.gameMusicStartSpeed;
 	this.gamemusic.loop = true;
 
-	this.leechsound = new Audio("leech.wav");
-	this.nukesound = new Audio('nuke.mp3');
+	this.leechsound = new Audio("res/leech.wav");
+	this.nukesound = new Audio('res/nuke.mp3');
+	this.alarmsound = new Audio('res/alarm.mp3');
 
 
 	/* PLAYER INIT */

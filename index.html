@@ -5,15 +5,16 @@
 		
 		<link rel = "stylesheet" type = "text/css" href = "index.css">
 
-		<script src = "jquery-2.2.2.min.js"></script>
-		<script src = "pixi.min.js"></script>
-		<script src = "chance.min.js"></script>
-		<script src = "victor.min.js"></script>
-		<script src = "lerppu.js"></script>
+		<script src = "lib/jquery-2.2.2.min.js"></script>
+		<script src = "lib/pixi.min.js"></script>
+		<script src = "lib/chance.min.js"></script>
+		<script src = "lib/victor.min.js"></script>
+		<script src = "lib/lerppu.js"></script>
 		<script src = "game.js"></script>
-		<script src = "player.js"></script>
-		<script src = "node.js"></script>
-		<script src = "leechline.js"></script>
+		<script src = "class/player.js"></script>
+		<script src = "class/node.js"></script>
+		<script src = "class/leechline.js"></script>
+		<script src = "class/aoe.js"></script>
 		<script src = "global.js"></script>
 
 	</head>
@@ -36,7 +37,7 @@
 			</div>
 		</div>
 
-		<audio id = "gamemusic" src = "gamemusic.mp3" type = "audio/mpeg" ></audio>
+		<audio id = "gamemusic" src = "res/gamemusic.mp3" type = "audio/mpeg" ></audio>
 	</body>
 	<script>
 		var game = new Game();
