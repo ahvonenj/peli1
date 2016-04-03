@@ -87,12 +87,12 @@ body
 
 #startgame
 {
-	width: 100px;
+	width: 500px;
 	height: 40px;
 
 	position: absolute;
 	top: calc(50% - 20px);
-	left: calc(50% - 50px);
+	left: calc(50% - 250px);
 
 	color: white;
 	background-color: #c0392b;
