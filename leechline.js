@@ -19,8 +19,8 @@ Leechline.prototype.draw = function(dt)
 	if(this.visible)
 	{
 		this.graphics.clear();
-	    this.graphics.lineStyle(2, 0x00FF00, 1);
-	    this.graphics.beginFill(0x00FF00, 1);
+	    this.graphics.lineStyle(2, 0xc0392b, 1);
+	    this.graphics.beginFill(0xc0392b, 1);
 	    this.graphics.moveTo(this.node.x + Global.noderad, this.node.y + Global.noderad);
 	    this.graphics.lineTo(this.game.player.x + Global.playerrad, this.game.player.y + Global.playerrad);
 

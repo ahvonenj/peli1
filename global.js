@@ -30,6 +30,7 @@ var Global =
 
 	starthealth: 1000,
 
+	nodeDamageAlphaDecay: 3,
 	playerDamageAlphaDecay: 3,
 
 	scoreAwardRate: 100,
