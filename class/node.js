@@ -18,6 +18,8 @@ function Node(game, sprite, x, y)
 	this.x = x || 0;
 	this.y = y || 0;
 
+	this.sprite.anchor = new PIXI.Point(0.5, 0.5);
+
 	this.exists = false;
 	this.isleeching = false;
 	this.leechline = new Leechline(this.game, this);
@@ -33,6 +35,9 @@ function Node(game, sprite, x, y)
 
 	this.damagegraphics = new PIXI.Graphics();
 	this.game.stage.addChild(this.damagegraphics);
+
+	this.sprite.position.x = this.x;
+	this.sprite.position.y = this.y;
 }
 
 Node.prototype.update = function(dt)
@@ -65,7 +70,7 @@ Node.prototype.update = function(dt)
 
 		if(this.candamage)
 		{
-			this.game.player.damage();
+			this.game.player.damage(this);
 
 			this.candamage = false;
 
@@ -118,7 +123,7 @@ Node.prototype.draw = function()
 		this.damagegraphics.clear();
 	    this.damagegraphics.lineStyle(2, 0xe74c3c, 1);
 	    this.damagegraphics.beginFill(0xe74c3c, 0);
-	    this.damagegraphics.drawCircle(this.x + Global.noderad * 2 - 1, this.y + Global.noderad * 2 - 1, Global.noderad * 3);
+	    this.damagegraphics.drawCircle(this.x - Global.noderad / 4 + 1, this.y - Global.noderad / 4 + 1, Global.noderad * 3);
 	    this.damagegraphics.endFill();  
 	}
 	
