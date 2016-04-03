@@ -30,8 +30,8 @@ function Node(game, sprite, x, y)
 
 	this.lerpid = guid();
 
-	this.wanderx = chance.integer({min: 0, max: Global.width - Global.noderad * 2});
-	this.wandery = chance.integer({min: 0, max: Global.height - Global.noderad * 2});
+	this.wanderx = this.game.player.x;
+	this.wandery = this.game.player.y;
 
 	this.damagegraphics = new PIXI.Graphics();
 	this.game.stage.addChild(this.damagegraphics);
