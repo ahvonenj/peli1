@@ -31,14 +31,20 @@ function Game()
 		time: 0
 	};
 
+	this.isgameover = false;
+
 
 	/* AUDIO INIT */
 	this.gamemusic = $('#gamemusic')[0];
 	this.gamemusic.playbackRate = Global.gameMusicStartSpeed;
 	this.gamemusic.loop = true;
 
+	this.leechsound = new Audio("leech.wav");
+	this.nukesound = new Audio('nuke.mp3');
+
 
 	/* PLAYER INIT */
+	this.score = 0;
 	this.player = new Player(this);
 
 
@@ -62,6 +68,7 @@ function Game()
     /* TIMERS INIT */
 	this.nodespawner = null;
 	this.gamemusicfastener = null;
+	this.scoreincreaser = null;
 
 
 	/* EVENTS INIT**/
@@ -102,6 +109,12 @@ Game.prototype.start = function()
 		self.gamemusic.playbackRate += Global.gameMusicIncreaseAmount;
 	}, Global.gameMusicSpeedIncreaseRate);
 
+	this.scoreincreaser = setInterval(function()
+	{
+		self.score += Global.scoreAwardAmount;
+	}, Global.scoreAwardRate);
+
+
 	this.gamemusic.play();
 
 	requestAnimationFrame(function(t) { self.animate(self); });
@@ -129,6 +142,14 @@ Game.prototype.animate = function(game)
 
 Game.prototype.update = function(dt)
 {
+	if(this.isgameover)
+		return;
+
+	if(this.player.health <= 0)
+	{
+		this.gameOver();
+	}
+
 	this.player.update(dt);
 
 	if(this.nodes.length > 0)
@@ -144,6 +165,9 @@ Game.prototype.update = function(dt)
 
 Game.prototype.render = function()
 {
+	if(this.isgameover)
+		return;
+
 	// Move player to front of all nodes
 	if(this.stage.children.length > 1)
 	{
@@ -159,6 +183,9 @@ Game.prototype.render = function()
 	this.player.draw();
 
 	this.renderer.render(this.stage);
+
+	$('#healthval').text('Health: ' + this.player.health);
+	$('#scoreval').text('Score: ' + this.score);
 }
 
 Game.prototype.spawnNode = function()
@@ -169,4 +196,12 @@ Game.prototype.spawnNode = function()
 		chance.integer({min: 0, max: Global.width - Global.noderad * 2}), 
 		chance.integer({min: 0, max: Global.height - Global.noderad * 2})
 	));
+}
+
+Game.prototype.gameOver = function()
+{
+	$('#gameover').fadeIn();
+	this.isgameover = true;
+	this.nukesound.play();
+	this.gamemusic.pause();
 }

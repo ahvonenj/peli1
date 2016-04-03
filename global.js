@@ -23,9 +23,15 @@ var Global =
 	gameMusicIncreaseAmount: 0.005,
 
 
-	nodedamage: 1,
+	nodedamage: 5,
+	nodedamagerate: 500,
 	leechdistance: 100,
 
-	starthealth: 100
+	starthealth: 1000,
+
+	playerDamageAlphaDecay: 3,
+
+	scoreAwardRate: 100,
+	scoreAwardAmount: 5
 
 }

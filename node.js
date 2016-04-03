@@ -23,6 +23,9 @@ function Node(game, sprite, x, y)
 	this.leechline = new Leechline(this.game, this);
 	this.playerwasinrange = false;
 
+	this.candamage = true;
+	this.candamageivl = null;
+
 	this.lerpid = guid();
 }
 
@@ -39,6 +42,18 @@ Node.prototype.update = function(dt)
 		this.playerwasinrange = true;
 		this.leechline.show();
 		this.isleeching = true;
+
+		if(this.candamage)
+		{
+			this.game.player.damage();
+
+			this.candamage = false;
+
+			this.candamageivl = setInterval(function()
+			{
+				self.candamage = true;
+			}, Global.nodedamagerate);
+		}
 
 		Lerppu.interrupt(this.lerpid);
 	}
