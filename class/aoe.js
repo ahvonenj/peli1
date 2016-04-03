@@ -52,8 +52,8 @@ Aoe.prototype.update = function(dt)
 Aoe.prototype.draw = function()
 {
 	this.graphics.clear();
-    this.graphics.lineStyle(0, this.color, 0.33);
-    this.graphics.beginFill(this.color, 0.33);
+    this.graphics.lineStyle(0, this.color, 0.2);
+    this.graphics.beginFill(this.color, 0.2);
     this.graphics.drawCircle(this.x, this.y, this.rad);
     this.graphics.endFill();
 
