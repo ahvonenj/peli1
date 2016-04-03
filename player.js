@@ -49,6 +49,18 @@ Player.prototype.update = function(dt)
 	{
 		this.x = Global.mouse.x;
 		this.y = Global.mouse.y;
+
+		if(this.x >= Global.width - 2)
+			this.x = Global.width - 2;
+
+		if(this.x <= 0)
+			this.x = 0;
+
+		if(this.y >= Global.height - 2)
+			this.y = Global.height - 2;
+
+		if(this.y <= 0)
+			this.y = 0;
 	}
 
 	if(this.x !== null && this.y !== null)
