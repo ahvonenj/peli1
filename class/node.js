@@ -129,3 +129,11 @@ Node.prototype.draw = function()
 	
 	this.game.renderer.render(this.damagegraphics);
 }
+
+Node.prototype.destroy = function()
+{
+
+	this.game.stage.removeChild(this.sprite);
+	this.game.stage.removeChild(this.damagegraphics);
+	this.leechline.destroy();
+}

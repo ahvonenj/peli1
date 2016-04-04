@@ -49,6 +49,7 @@ function Game()
 
 	/* PLAYER INIT */
 	this.score = 0;
+	this.aoetotalmultiplier = 1;
 	this.player = new Player(this);
 
 
@@ -100,7 +101,18 @@ function Game()
 
 		Global.mouse.x = evt.clientX - Global.stageoffset.x;
 		Global.mouse.y = evt.clientY - Global.stageoffset.y;
-		
+	});
+
+	this.stage.on('mousedown', function(data)
+	{
+		var evt = data.data.originalEvent;
+		Global.mouse.isdown = true;
+	});
+
+	this.stage.on('mouseup', function(data)
+	{
+		var evt = data.data.originalEvent;
+		Global.mouse.isdown = false;
 	});
 
 	$('#startgame').on('click', function()
@@ -109,6 +121,22 @@ function Game()
 		self.start();
 
 		$(this).fadeOut('fast');
+
+		$('#tutorial-1').fadeTo('fast', 1, function()
+		{
+			setTimeout(function()
+			{
+				$('#tutorial-1').hide();
+
+				$('#tutorial-2').fadeTo('fast', 1, function()
+				{
+					setTimeout(function()
+					{
+						$('#tutorial-2').hide();
+					}, 2000);
+				});
+			}, 800);
+		})
 	});
 }
 
@@ -136,7 +164,7 @@ Game.prototype.start = function()
 
 	this.scoreincreaser = setInterval(function()
 	{
-		self.score += Global.scoreAwardAmount;
+		self.score += Global.scoreBaseAmount * self.aoetotalmultiplier;
 	}, Global.scoreAwardRate);
 
 	this.regentimer = setInterval(function()
@@ -180,6 +208,8 @@ Game.prototype.animate = function(game)
 
 Game.prototype.update = function(dt)
 {
+	this.aoetotalmultiplier = 1;
+
 	if(this.isgameover)
 		return;
 
@@ -188,13 +218,21 @@ Game.prototype.update = function(dt)
 		this.gameOver();
 	}
 
-	this.player.update(dt);
-
 	if(this.nodes.length > 0)
 	{
 		for(var i = 0; i < this.nodes.length; i++)
 		{
 			this.nodes[i].update(dt);
+
+			var nv = new Victor(this.nodes[i].x, this.nodes[i].y);
+			var pv = new Victor(this.player.x, this.player.y);
+
+			if(nv.distance(pv) < this.player.shieldradius * 2)
+			{
+				this.player.health += 10;
+				this.nodes[i].destroy();
+				this.nodes.splice(i, 1);
+			}
 		}
 	}
 
@@ -204,12 +242,22 @@ Game.prototype.update = function(dt)
 		{
 			this.aoes[i].update(dt);
 
+			var av = new Victor(this.aoes[i].x, this.aoes[i].y);
+			var pv = new Victor(this.player.x, this.player.y);
+
+			if(av.distance(pv) < this.aoes[i].rad)
+			{
+				this.aoetotalmultiplier += Global.aoeScoreMultiplier;
+			}
+
 			if(this.aoes[i].bursted)
 			{
 				this.aoes.splice(i, 1);
 			}
 		}
 	}
+
+	this.player.update(dt);
 
 	Lerppu.update(this.t.time);
 }
@@ -241,7 +289,7 @@ Game.prototype.render = function()
 	this.renderer.render(this.stage);
 
 	$('#healthval').text('Health: ' + this.player.health);
-	$('#scoreval').text('Score: ' + this.score);
+	$('#scoreval').text('Score: ' + this.score + ' (' + this.aoetotalmultiplier + 'x)');
 }
 
 Game.prototype.spawnNode = function()
@@ -278,4 +326,17 @@ Game.prototype.gameOver = function()
 	{
 		clearInterval(this.timers[i]);
 	}
+}
+
+Game.prototype.reduceScore = function(amount)
+{
+	this.score -= amount;
+
+	if(this.score < 0)
+		this.score = 0;
+}
+
+Game.prototype.increaseScore = function(amount)
+{
+	this.score += amount;
 }
