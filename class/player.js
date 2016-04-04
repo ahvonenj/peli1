@@ -31,9 +31,6 @@ function Player(game)
 
     this.aoemultipliergraphics = new PIXI.Graphics();
     this.game.stage.addChild(this.aoemultipliergraphics);
-
-    this.shieldgraphics = new PIXI.Graphics();
-    this.game.stage.addChild(this.shieldgraphics);
 }
 
 Player.prototype.damage = function(source)
@@ -42,22 +39,6 @@ Player.prototype.damage = function(source)
 
 	if(!this.game.godmode)
 	{
-		if(source instanceof Node)
-		{
-			if(this.shieldradius > 15)
-				this.health -= 1;
-			else
-				this.health -= Global.nodedamage;
-
-			this.game.leechsound.play();
-
-		}
-		else if(source instanceof Aoe)
-		{
-			this.health -= Global.aoedamage;
-			this.game.aoehit.play();
-		}
-
 		if(this.health <= 0)
 			this.health = 0;
 	}
@@ -104,26 +85,6 @@ Player.prototype.update = function(dt)
 	{
 		this.aoemultipliergraphics.alpha = 1;
 	}
-
-	if(Global.mouse.isdown)
-	{
-		if(this.game.score > 0)
-		{
-			this.shieldradius += Global.shieldGrowRate * dt;
-
-			if(this.shieldradius > Global.shieldMaxRadius)
-				this.shieldradius = Global.shieldMaxRadius;
-
-			this.game.reduceScore(this.shieldradius / 5);
-		}
-	}
-	else
-	{
-		this.shieldradius -= Global.shieldDownRate * dt;
-
-		if(this.shieldradius < 0)
-			this.shieldradius = 0;
-	}
 }
 
 Player.prototype.draw = function()
@@ -145,13 +106,4 @@ Player.prototype.draw = function()
     this.aoemultipliergraphics.endFill();  
 
 	this.game.renderer.render(this.aoemultipliergraphics);
-
-
-	this.shieldgraphics.clear();
-    this.shieldgraphics.lineStyle(2, 0x3498db, 1);
-    this.shieldgraphics.beginFill(0x3498db, 0);
-    this.shieldgraphics.drawCircle(this.x - Global.playerrad / 4, this.y - Global.playerrad / 4, Global.playerrad * this.shieldradius);
-    this.shieldgraphics.endFill();  
-
-	this.game.renderer.render(this.shieldgraphics);
 }

@@ -52,20 +52,6 @@ function Game()
 	this.aoetotalmultiplier = 1;
 	this.player = new Player(this);
 
-
-	/* NODES INIT */
-	this.nodes = [];
-
-	this.nodegraphics = new PIXI.Graphics();
-	this.nodegraphics.clear();
-    this.nodegraphics.lineStyle(3, 0xFFFFFF, 1);
-    this.nodegraphics.beginFill(0xFFFFFF, 1);
-    this.nodegraphics.drawCircle(999999, 999999, Global.noderad);
-    this.nodegraphics.endFill();   
-
-    this.tex = self.nodegraphics.generateTexture();
-
-
     /* AOE INIT */
     this.aoes = [];
 
@@ -154,7 +140,6 @@ Game.prototype.start = function()
 	}
 
 	/* TIMERS START */
-	this.nodespawner = setInterval(this.spawnNode.bind(self), Global.nodeSpawnStartRate);
 
 	this.gamemusicfastener = setInterval(function()
 	{
@@ -221,25 +206,6 @@ Game.prototype.update = function(dt)
 		this.gameOver();
 	}
 
-	if(this.nodes.length > 0)
-	{
-		for(var i = 0; i < this.nodes.length; i++)
-		{
-			this.nodes[i].update(dt);
-
-			var nv = new Victor(this.nodes[i].x, this.nodes[i].y);
-			var pv = new Victor(this.player.x, this.player.y);
-
-			if(nv.distance(pv) < this.player.shieldradius * 2)
-			{
-				this.player.health += 2;
-				this.increaseScore(1);
-				this.nodes[i].destroy();
-				this.nodes.splice(i, 1);
-			}
-		}
-	}
-
 	if(this.aoes.length > 0)
 	{
 		for(var i = 0; i < this.aoes.length; i++)
@@ -278,11 +244,6 @@ Game.prototype.render = function()
 		this.stage.addChildAt(this.player.sprite, this.stage.children.length - 1);
 	}
 
-	for(var i = 0; i < this.nodes.length; i++)
-	{
-		this.nodes[i].draw();
-	}
-
 	for(var i = 0; i < this.aoes.length; i++)
 	{
 		this.aoes[i].draw();
@@ -294,16 +255,6 @@ Game.prototype.render = function()
 
 	$('#healthval').text('Health: ' + this.player.health.toFixed(0));
 	$('#scoreval').text('Score: ' + this.score.toFixed(0) + ' (' + this.aoetotalmultiplier + 'x)');
-}
-
-Game.prototype.spawnNode = function()
-{
-	var self = this;
-
-	self.nodes.push(new Node(self, new PIXI.Sprite(self.tex), 
-		chance.integer({min: 0, max: Global.width - Global.noderad * 2}), 
-		chance.integer({min: 0, max: Global.height - Global.noderad * 2})
-	));
 }
 
 Game.prototype.spawnAoe = function()
