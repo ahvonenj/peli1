@@ -102,12 +102,15 @@ Player.prototype.update = function(dt)
 
 	if(Global.mouse.isdown)
 	{
-		this.shieldradius += Global.shieldGrowRate * dt;
+		if(this.game.score > 0)
+		{
+			this.shieldradius += Global.shieldGrowRate * dt;
 
-		if(this.shieldradius > Global.shieldMaxRadius)
-			this.shieldradius = Global.shieldMaxRadius;
+			if(this.shieldradius > Global.shieldMaxRadius)
+				this.shieldradius = Global.shieldMaxRadius;
 
-		this.game.reduceScore(this.shieldradius / 4);
+			this.game.reduceScore(this.shieldradius / 4);
+		}
 	}
 	else
 	{

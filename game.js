@@ -164,7 +164,10 @@ Game.prototype.start = function()
 
 	this.scoreincreaser = setInterval(function()
 	{
-		self.score += Global.scoreBaseAmount * self.aoetotalmultiplier;
+		if(!Global.mouse.isdown)
+		{
+			self.score += Global.scoreBaseAmount * self.aoetotalmultiplier;
+		}
 	}, Global.scoreAwardRate);
 
 	this.regentimer = setInterval(function()
