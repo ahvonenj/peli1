@@ -128,14 +128,14 @@ function Game()
 			{
 				$('#tutorial-1').hide();
 
-				$('#tutorial-2').fadeTo('fast', 1, function()
+				/*$('#tutorial-2').fadeTo('fast', 1, function()
 				{
 					setTimeout(function()
 					{
 						$('#tutorial-2').hide();
 					}, 2000);
-				});
-			}, 800);
+				});*/
+			}, 1100);
 		})
 	});
 }
