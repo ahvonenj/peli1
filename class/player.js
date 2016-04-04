@@ -107,7 +107,7 @@ Player.prototype.update = function(dt)
 		if(this.shieldradius > Global.shieldMaxRadius)
 			this.shieldradius = Global.shieldMaxRadius;
 
-		this.game.reduceScore(Global.shieldScoreReduceAmount);
+		this.game.reduceScore(this.shieldradius);
 	}
 	else
 	{
