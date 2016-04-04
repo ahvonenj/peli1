@@ -7,7 +7,7 @@ var Global =
 	playerrad: 2,
 
 	aoeminrad: 50,
-	aoemaxrad: 250,
+	aoemaxrad: 225,
 
 	mouse:
 	{
@@ -28,7 +28,7 @@ var Global =
 
 	nodedamage: 5,
 	nodedamagerate: 500,
-	leechdistance: 100,
+	leechdistance: 80,
 	nodeWanderSpeed: 1,
 
 	maxhealth: 1000,
@@ -50,13 +50,13 @@ var Global =
 	aoeSpawnIncreaseSpeed: 5000,
 	aoeSpawnIncreaseAmount: 500,
 
-	aoedamage: 250,
+	aoedamage: 200,
 	aoedamagerate: 1000,
 	aoeAlphaDecay: 4,
 
 	aoeGrowRate: 100,
 
-	aoeTimeBeforeBurst: 450,
+	aoeTimeBeforeBurst: 650,
 
 	shieldGrowRate: 75,
 	shieldDownRate: 300,

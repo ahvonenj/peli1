@@ -82,13 +82,30 @@ body
 	width: 100%;
 	height: calc(100% - 31px);
 	position: absolute;
-	line-height: 600px;
 	font-size: 24pt;
 	background-color: black;
 	color: white;
 	font-family: Arial;
 	text-align: center;
-	display: none;
+
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	-webkit-box-align: center;
+
+	align-items: center;
+
+	opacity: 0;
+
+	pointer-events: none;
+}
+
+#gameover > p
+{
+	width: 100%;
 }
 
 #startgame

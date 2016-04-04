@@ -30,7 +30,7 @@
 			</div>
 			<div id = "game">
 				<div id = "gameover">
-					GAME OVER FOOL
+					<p>GAME OVER FOOL<br/>(double click to restart)</p>
 				</div>
 				<div id = "startgame">
 					START (Warning: loud music)
@@ -58,6 +58,17 @@
 			alert('- Dodge white nodes\n- Yellow areas yield a score multiplier, but do damage when explode\n' + 
 				'- Left click grows a "node-eating" shield, but wrecks your score based on the radius of the shield\n' + 
 				'- Eating nodes only grants 1 point / node and a small amount of health to compensate for the node\'s attack');
+		});
+
+		$('#gameover').on('dblclick', function()
+		{
+			game.nukesound.pause();
+			$(this).fadeTo('fast', 0);
+			game = null;
+			game = new Game();
+			game.start();
+
+			$(this).css('pointer-events', 'none');
 		});
 	</script>
 </html>

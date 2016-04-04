@@ -45,7 +45,11 @@ Player.prototype.damage = function(source)
 		if(source instanceof Node)
 		{
 			if(this.shieldradius > 15)
+<<<<<<< HEAD
 				this.health -= Global.nodedamage / 2;
+=======
+				this.health -= 1;
+>>>>>>> refs/remotes/origin/gh-pages
 			else
 				this.health -= Global.nodedamage;
 
@@ -114,7 +118,7 @@ Player.prototype.update = function(dt)
 			if(this.shieldradius > Global.shieldMaxRadius)
 				this.shieldradius = Global.shieldMaxRadius;
 
-			this.game.reduceScore(this.shieldradius / 4);
+			this.game.reduceScore(this.shieldradius / 5);
 		}
 	}
 	else
