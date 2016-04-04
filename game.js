@@ -101,7 +101,18 @@ function Game()
 
 		Global.mouse.x = evt.clientX - Global.stageoffset.x;
 		Global.mouse.y = evt.clientY - Global.stageoffset.y;
-		
+	});
+
+	this.stage.on('mousedown', function(data)
+	{
+		var evt = data.data.originalEvent;
+		Global.mouse.isdown = true;
+	});
+
+	this.stage.on('mouseup', function(data)
+	{
+		var evt = data.data.originalEvent;
+		Global.mouse.isdown = false;
 	});
 
 	$('#startgame').on('click', function()
@@ -212,6 +223,16 @@ Game.prototype.update = function(dt)
 		for(var i = 0; i < this.nodes.length; i++)
 		{
 			this.nodes[i].update(dt);
+
+			var nv = new Victor(this.nodes[i].x, this.nodes[i].y);
+			var pv = new Victor(this.player.x, this.player.y);
+
+			if(nv.distance(pv) < this.player.shieldradius * 2)
+			{
+				this.player.health += 10;
+				this.nodes[i].destroy();
+				this.nodes.splice(i, 1);
+			}
 		}
 	}
 
@@ -305,4 +326,17 @@ Game.prototype.gameOver = function()
 	{
 		clearInterval(this.timers[i]);
 	}
+}
+
+Game.prototype.reduceScore = function(amount)
+{
+	this.score -= amount;
+
+	if(this.score < 0)
+		this.score = 0;
+}
+
+Game.prototype.increaseScore = function(amount)
+{
+	this.score += amount;
 }

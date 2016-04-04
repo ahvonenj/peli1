@@ -7,10 +7,9 @@ function Player(game)
 
 	this.istakingdamage = false;
 
-
-
 	this.x = null;
 	this.y = null;
+	this.shieldradius = 0;
 
 	this.playergraphics = new PIXI.Graphics();
 	this.playergraphics.clear();
@@ -32,6 +31,9 @@ function Player(game)
 
     this.aoemultipliergraphics = new PIXI.Graphics();
     this.game.stage.addChild(this.aoemultipliergraphics);
+
+    this.shieldgraphics = new PIXI.Graphics();
+    this.game.stage.addChild(this.shieldgraphics);
 }
 
 Player.prototype.damage = function(source)
@@ -88,7 +90,6 @@ Player.prototype.update = function(dt)
 	if(this.game.aoetotalmultiplier > 1)
 	{
 		this.aoemultipliergraphics.alpha = 1;
-		console.log(1)
 	}
 
 	this.damagegraphics.alpha -= Global.playerDamageAlphaDecay * dt;
@@ -97,6 +98,23 @@ Player.prototype.update = function(dt)
 	if(this.game.aoetotalmultiplier > 1)
 	{
 		this.aoemultipliergraphics.alpha = 1;
+	}
+
+	if(Global.mouse.isdown)
+	{
+		this.shieldradius += Global.shieldGrowRate * dt;
+
+		if(this.shieldradius > Global.shieldMaxRadius)
+			this.shieldradius = Global.shieldMaxRadius;
+
+		this.game.reduceScore(Global.shieldScoreReduceAmount);
+	}
+	else
+	{
+		this.shieldradius -= Global.shieldDownRate * dt;
+
+		if(this.shieldradius < 0)
+			this.shieldradius = 0;
 	}
 }
 
@@ -119,4 +137,13 @@ Player.prototype.draw = function()
     this.aoemultipliergraphics.endFill();  
 
 	this.game.renderer.render(this.aoemultipliergraphics);
+
+
+	this.shieldgraphics.clear();
+    this.shieldgraphics.lineStyle(2, 0x3498db, 1);
+    this.shieldgraphics.beginFill(0x3498db, 0);
+    this.shieldgraphics.drawCircle(this.x - Global.playerrad / 4, this.y - Global.playerrad / 4, Global.playerrad * this.shieldradius);
+    this.shieldgraphics.endFill();  
+
+	this.game.renderer.render(this.shieldgraphics);
 }

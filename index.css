@@ -155,6 +155,8 @@ canvas
 	height: calc(100% - 34px);
 	position: absolute;
 	font-size: 22pt;
+
+	pointer-events: none;
 }
 
 .tutorial > p
