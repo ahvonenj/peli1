@@ -229,7 +229,8 @@ Game.prototype.update = function(dt)
 
 			if(nv.distance(pv) < this.player.shieldradius * 2)
 			{
-				this.player.health += 10;
+				this.player.health += 1;
+				this.increaseScore(1);
 				this.nodes[i].destroy();
 				this.nodes.splice(i, 1);
 			}
