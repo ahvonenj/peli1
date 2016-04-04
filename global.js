@@ -56,9 +56,9 @@ var Global =
 
 	aoeGrowRate: 100,
 
-	aoeTimeBeforeBurst: 250,
+	aoeTimeBeforeBurst: 450,
 
-	shieldGrowRate: 50,
+	shieldGrowRate: 75,
 	shieldDownRate: 300,
 	shieldMaxRadius: 25,
 	shieldScoreReduceAmount: 3

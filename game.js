@@ -128,14 +128,14 @@ function Game()
 			{
 				$('#tutorial-1').hide();
 
-				$('#tutorial-2').fadeTo('fast', 1, function()
+				/*$('#tutorial-2').fadeTo('fast', 1, function()
 				{
 					setTimeout(function()
 					{
 						$('#tutorial-2').hide();
 					}, 2000);
-				});
-			}, 800);
+				});*/
+			}, 1100);
 		})
 	});
 }
@@ -229,7 +229,8 @@ Game.prototype.update = function(dt)
 
 			if(nv.distance(pv) < this.player.shieldradius * 2)
 			{
-				this.player.health += 10;
+				this.player.health += 1;
+				this.increaseScore(1);
 				this.nodes[i].destroy();
 				this.nodes.splice(i, 1);
 			}
@@ -288,8 +289,8 @@ Game.prototype.render = function()
 
 	this.renderer.render(this.stage);
 
-	$('#healthval').text('Health: ' + this.player.health);
-	$('#scoreval').text('Score: ' + this.score + ' (' + this.aoetotalmultiplier + 'x)');
+	$('#healthval').text('Health: ' + this.player.health.toFixed(0));
+	$('#scoreval').text('Score: ' + this.score.toFixed(0) + ' (' + this.aoetotalmultiplier + 'x)');
 }
 
 Game.prototype.spawnNode = function()
