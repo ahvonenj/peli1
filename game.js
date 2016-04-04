@@ -289,8 +289,8 @@ Game.prototype.render = function()
 
 	this.renderer.render(this.stage);
 
-	$('#healthval').text('Health: ' + this.player.health);
-	$('#scoreval').text('Score: ' + this.score + ' (' + this.aoetotalmultiplier + 'x)');
+	$('#healthval').text('Health: ' + this.player.health.toFixed(0));
+	$('#scoreval').text('Score: ' + this.score.toFixed(0) + ' (' + this.aoetotalmultiplier + 'x)');
 }
 
 Game.prototype.spawnNode = function()
