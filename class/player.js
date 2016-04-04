@@ -44,8 +44,13 @@ Player.prototype.damage = function(source)
 	{
 		if(source instanceof Node)
 		{
-			this.health -= Global.nodedamage;
+			if(this.shieldradius > 15)
+				this.health -= Global.nodedamage / 2;
+			else
+				this.health -= Global.nodedamage;
+
 			this.game.leechsound.play();
+
 		}
 		else if(source instanceof Aoe)
 		{
