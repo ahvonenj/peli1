@@ -49,6 +49,7 @@ function Game()
 
 	/* PLAYER INIT */
 	this.score = 0;
+	this.aoetotalmultiplier = 1;
 	this.player = new Player(this);
 
 
@@ -109,6 +110,22 @@ function Game()
 		self.start();
 
 		$(this).fadeOut('fast');
+
+		$('#tutorial-1').fadeTo('fast', 1, function()
+		{
+			setTimeout(function()
+			{
+				$('#tutorial-1').hide();
+
+				$('#tutorial-2').fadeTo('fast', 1, function()
+				{
+					setTimeout(function()
+					{
+						$('#tutorial-2').hide();
+					}, 2000);
+				});
+			}, 800);
+		})
 	});
 }
 
@@ -136,7 +153,7 @@ Game.prototype.start = function()
 
 	this.scoreincreaser = setInterval(function()
 	{
-		self.score += Global.scoreAwardAmount;
+		self.score += Global.scoreBaseAmount * self.aoetotalmultiplier;
 	}, Global.scoreAwardRate);
 
 	this.regentimer = setInterval(function()
@@ -180,6 +197,8 @@ Game.prototype.animate = function(game)
 
 Game.prototype.update = function(dt)
 {
+	this.aoetotalmultiplier = 1;
+
 	if(this.isgameover)
 		return;
 
@@ -187,8 +206,6 @@ Game.prototype.update = function(dt)
 	{
 		this.gameOver();
 	}
-
-	this.player.update(dt);
 
 	if(this.nodes.length > 0)
 	{
@@ -204,12 +221,22 @@ Game.prototype.update = function(dt)
 		{
 			this.aoes[i].update(dt);
 
+			var av = new Victor(this.aoes[i].x, this.aoes[i].y);
+			var pv = new Victor(this.player.x, this.player.y);
+
+			if(av.distance(pv) < this.aoes[i].rad)
+			{
+				this.aoetotalmultiplier += Global.aoeScoreMultiplier;
+			}
+
 			if(this.aoes[i].bursted)
 			{
 				this.aoes.splice(i, 1);
 			}
 		}
 	}
+
+	this.player.update(dt);
 
 	Lerppu.update(this.t.time);
 }
@@ -241,7 +268,7 @@ Game.prototype.render = function()
 	this.renderer.render(this.stage);
 
 	$('#healthval').text('Health: ' + this.player.health);
-	$('#scoreval').text('Score: ' + this.score);
+	$('#scoreval').text('Score: ' + this.score + ' (' + this.aoetotalmultiplier + 'x)');
 }
 
 Game.prototype.spawnNode = function()

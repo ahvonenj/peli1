@@ -29,6 +29,9 @@ function Player(game)
 
     this.damagegraphics = new PIXI.Graphics();
     this.game.stage.addChild(this.damagegraphics);
+
+    this.aoemultipliergraphics = new PIXI.Graphics();
+    this.game.stage.addChild(this.aoemultipliergraphics);
 }
 
 Player.prototype.damage = function(source)
@@ -82,21 +85,38 @@ Player.prototype.update = function(dt)
 		this.sprite.position.y = this.y;
 	}
 
+	if(this.game.aoetotalmultiplier > 1)
+	{
+		this.aoemultipliergraphics.alpha = 1;
+		console.log(1)
+	}
+
 	this.damagegraphics.alpha -= Global.playerDamageAlphaDecay * dt;
+	this.aoemultipliergraphics.alpha -= Global.playerMultiplierAlphaDecay * dt;
+
+	if(this.game.aoetotalmultiplier > 1)
+	{
+		this.aoemultipliergraphics.alpha = 1;
+	}
 }
 
 Player.prototype.draw = function()
 {
 	this.game.renderer.render(this.sprite);
 
-	if(this.istakingdamage)
-	{
-		this.damagegraphics.clear();
-	    this.damagegraphics.lineStyle(2, 0x9b59b6, 1);
-	    this.damagegraphics.beginFill(0x9b59b6, 0);
-	    this.damagegraphics.drawCircle(this.x - Global.playerrad /4, this.y - Global.playerrad/4, Global.playerrad * 5);
-	    this.damagegraphics.endFill();  
+	this.damagegraphics.clear();
+    this.damagegraphics.lineStyle(2, 0x9b59b6, 1);
+    this.damagegraphics.beginFill(0x9b59b6, 0);
+    this.damagegraphics.drawCircle(this.x - Global.playerrad / 4, this.y - Global.playerrad / 4, Global.playerrad * 5);
+    this.damagegraphics.endFill();  
 
-		this.game.renderer.render(this.damagegraphics);
-	}
+
+	this.game.renderer.render(this.damagegraphics);
+	this.aoemultipliergraphics.clear();
+    this.aoemultipliergraphics.lineStyle(2, 0x1abc9c, 1);
+    this.aoemultipliergraphics.beginFill(0x1abc9c, 0);
+    this.aoemultipliergraphics.drawCircle(this.x - Global.playerrad / 4, this.y - Global.playerrad / 4, Global.playerrad * 7);
+    this.aoemultipliergraphics.endFill();  
+
+	this.game.renderer.render(this.aoemultipliergraphics);
 }

@@ -13,9 +13,9 @@ html, body
 
 body
 {
-	background-color: #34495e;
-	background-image: url('res/tutorial.png');
-	background-repeat: repeat;
+	background-image: url('res/bg.png');
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
 }
 
 #wrapper
@@ -26,6 +26,12 @@ body
 	position: absolute;
 	left: calc(50% - 300px);
 	top: 100px;
+
+	-webkit-box-shadow: 3px 3px 5px 0px rgba(51,49,51,1);
+	-moz-box-shadow: 3px 3px 5px 0px rgba(51,49,51,1);
+	box-shadow: 3px 3px 5px 0px rgba(51,49,51,1);
+
+	opacity: 0.97;
 }
 
 #score
@@ -106,6 +112,8 @@ body
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
+
+	z-index: 100;
 }
 
 #startgame:hover
@@ -120,4 +128,46 @@ canvas
 	width: 100%;
 	height: 100%;
 	background-color: #2c3e50;
+}
+
+.tutorial
+{
+	cursor: default;
+	z-index: 99;
+
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	-webkit-box-align: center;
+
+	align-items: center;
+
+	color: white;
+	font-family: Arial;
+	text-align: center;
+
+	top: 34px;
+	left: 0;
+	width: 100%;
+	height: calc(100% - 34px);
+	position: absolute;
+	font-size: 22pt;
+}
+
+.tutorial > p
+{
+	width: 100%;
+}
+
+#tutorial-1
+{
+	opacity: 0;
+}
+
+#tutorial-2
+{
+	opacity: 0;
 }

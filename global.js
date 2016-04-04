@@ -38,9 +38,11 @@ var Global =
 
 	nodeDamageAlphaDecay: 3,
 	playerDamageAlphaDecay: 3,
+	playerMultiplierAlphaDecay: 3,
 
 	scoreAwardRate: 100,
-	scoreAwardAmount: 5,
+	scoreBaseAmount: 5,
+	aoeScoreMultiplier: 1,
 
 
 	aoeSpawnStartRate: 1000,
@@ -55,5 +57,7 @@ var Global =
 	aoeGrowRate: 100,
 
 	aoeTimeBeforeBurst: 250
+
+
 
 }
