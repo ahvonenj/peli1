@@ -42,6 +42,9 @@
 					<p>YELLOW AREAS YIELD SCORE MULTIPLIER, BUT DO DAMAGE WHEN EXPLODE</p>
 				</div>
 				<canvas id = "canvas"></canvas>
+				<div id = "toolbar">
+					<input type = "button" value = "help" id = "help"/>
+				</div>
 			</div>
 		</div>
 
@@ -49,5 +52,12 @@
 	</body>
 	<script>
 		var game = new Game();
+
+		$('#help').on('click', function()
+		{
+			alert('- Dodge white nodes\n- Yellow areas yield a score multiplier, but do damage when explode\n' + 
+				'- Left click grows a "node-eating" shield, but wrecks your score based on the radius of the shield\n' + 
+				'- Eating nodes only grants 1 point / node and a small amount of health to compensate for the node\'s attack');
+		});
 	</script>
 </html>

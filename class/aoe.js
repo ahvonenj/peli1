@@ -11,7 +11,7 @@ function Aoe(game, x, y)
 	this.readytoburst = false;
 
 	this.shakemod = -1;
-	this.shakeamount = 8;
+	this.shakeamount = 6;
 
 	this.burstivl = null;
 
