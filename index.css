@@ -80,7 +80,7 @@ body
 	top: 34px;
 	left: 0;
 	width: 100%;
-	height: calc(100% - 34px);
+	height: calc(100% - 31px);
 	position: absolute;
 	line-height: 600px;
 	font-size: 24pt;
